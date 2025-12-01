@@ -1,0 +1,7 @@
+.stack-up {
+  transform: translateY(-100px); /* Move stack up */
+}
+
+.stack-left {
+  transform: translateX(-190px); /* Move the stack to the left */
+}
