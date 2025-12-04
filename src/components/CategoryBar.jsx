@@ -2,12 +2,12 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const categories = [
-  { name: 'Cakes', image: '/src/assets/icons/cake.jpg' },
-  { name: 'Chocolate-cakes', image: '/src/assets/icons/Choco_cake.jpg' },
-  { name: 'Cookies', image: '/src/assets/icons/coockies.jpg' },
-  { name: 'Cupcake', image: '/src/assets/icons/cupcake.jpg' },
-  { name: 'Deco cake', image: '/src/assets/icons/deco_cake.jpg' },
-  { name: 'Pastries', image: '/src/assets/icons/pastries.jpg' },
+  { name: 'Cakes', image: '../assets/icons/cake.jpg' },
+  { name: 'Chocolate-cakes', image: '../assets/icons/Choco_cake.jpg' },
+  { name: 'Cookies', image: '../assets/icons/coockies.jpg' },
+  { name: 'Cupcake', image: '../assets/icons/cupcake.jpg' },
+  { name: 'Deco cake', image: '../assets/icons/deco_cake.jpg' },
+  { name: 'Pastries', image: '../assets/icons/pastries.jpg' },
 ];
 
 const CategoryBar = () => {
