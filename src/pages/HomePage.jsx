@@ -55,7 +55,7 @@ const HomePage = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-green-900 mb-3">
-              Zentra Bakery
+              So Fresh Delight
             </h1>
             <p className="text-pink-600 text-lg sm:text-xl font-light max-w-2xl mx-auto">
               Crafting sweet moments with artisanal delights
