@@ -10,7 +10,7 @@ import pastries from '../assets/icons/pastries.jpg';
 
 const categories = [
   { name: 'Cakes', image: cake },
-  { name: 'Chocolate-cakes', image: choco },
+  { name: 'Chococakes', image: choco },
   { name: 'Cookies', image: cookies },
   { name: 'Cupcake', image: cupcake },
   { name: 'Deco cake', image: deco },
