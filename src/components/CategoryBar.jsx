@@ -1,14 +1,22 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import cake from '../assets/icons/cake.jpg';
+import choco from '../assets/icons/Choco_cake.jpg';
+import cookies from '../assets/icons/coockies.jpg';
+import cupcake from '../assets/icons/cupcake.jpg';
+import deco from '../assets/icons/deco_cake.jpg';
+import pastries from '../assets/icons/pastries.jpg';
+
 const categories = [
-  { name: 'Cakes', image: '/src/assets/icons/cake.jpg' },
-  { name: 'Chocolate-cakes', image: '/src/assets/icons/Choco_cake.jpg' },
-  { name: 'Cookies', image: '/src/assets/icons/coockies.jpg' },
-  { name: 'Cupcake', image: '/src/assets/icons/cupcake.jpg' },
-  { name: 'Deco cake', image: '/src/assets/icons/deco_cake.jpg' },
-  { name: 'Pastries', image: '/src/assets/icons/pastries.jpg' },
+  { name: 'Cakes', image: cake },
+  { name: 'Chocolate', image: choco },
+  { name: 'Cookies', image: cookies },
+  { name: 'Cupcake', image: cupcake },
+  { name: 'Deco cake', image: deco },
+  { name: 'Pastries', image: pastries },
 ];
+
 
 const CategoryBar = () => {
   const navigate = useNavigate();
