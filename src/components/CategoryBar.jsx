@@ -28,24 +28,29 @@ const CategoryBar = () => {
 
   return (
     <div className="w-full bg-white border-b border-gray-100 shadow-sm sticky top-0 z-40">
-      <div className="max-w-6xl mx-auto px-1 md:px-4">
+      <div className="max-w-6xl mx-auto">
         
-        {/* GRID LAYOUT: 6 columns, tighter gap on mobile */}
-        <div className="grid grid-cols-6 gap-1 md:gap-4 py-2 md:py-3 align-top">
+        {/* SCROLL CONTAINER:
+            - flex: Lays items out in a row
+            - overflow-x-auto: Enables horizontal scrolling
+            - no-scrollbar: Hides the ugly scrollbar (see CSS below)
+        */}
+        <div className="flex items-center gap-4 px-4 py-3 overflow-x-auto no-scrollbar">
           {categories.map((category, index) => (
             <div
               key={index}
               onClick={() => handleCategoryClick(category.name)}
-              className="group flex flex-col md:flex-row items-center justify-start md:justify-center cursor-pointer p-0.5 md:p-1 h-full"
+              // flex-shrink-0 prevents items from squishing
+              className="group flex flex-col md:flex-row items-center cursor-pointer flex-shrink-0"
             >
-              {/* Icon Container - Smaller on Mobile */}
+              {/* Icon Container */}
               <div 
                 className={`relative 
-                  w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 
+                  w-12 h-12 md:w-10 md:h-10 
                   rounded-full ${category.color} border border-gray-200 
                   overflow-hidden transition-transform duration-200 group-hover:scale-110
                   ${activeCategory === category.name ? 'ring-2 ring-amber-400 scale-110' : ''}
-                  mb-1 md:mb-0 md:mr-2 flex-shrink-0`}
+                  mb-1 md:mb-0 md:mr-2`}
               >
                 <img
                   src={category.image}
@@ -54,13 +59,11 @@ const CategoryBar = () => {
                 />
               </div>
 
-              {/* Text Label - Visible & Smaller on Mobile */}
+              {/* Text Label - Nice size now that we have scrolling */}
               <span 
                 className={`
-                  text-[9px] sm:text-xs md:text-sm font-medium text-center md:text-left
-                  leading-none md:leading-normal
-                  whitespace-normal
-                  w-full md:w-auto
+                  text-xs md:text-sm font-medium
+                  whitespace-nowrap
                   transition-colors duration-200
                   ${activeCategory === category.name ? 'text-orange-600 font-bold' : 'text-gray-600'}
                   group-hover:text-gray-900
@@ -71,7 +74,7 @@ const CategoryBar = () => {
 
               {/* Active Indicator (Desktop Only) */}
               {activeCategory === category.name && (
-                <div className="hidden md:block absolute -bottom-[13px] w-full h-0.5 bg-orange-500 rounded-t-full"></div>
+                <div className="hidden md:block absolute -bottom-[13px] left-0 w-full h-0.5 bg-orange-500 rounded-t-full"></div>
               )}
             </div>
           ))}
