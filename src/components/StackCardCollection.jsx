@@ -28,85 +28,6 @@ if (typeof document !== "undefined" && !document.getElementById("float-animation
   document.head.appendChild(styleSheet);
 }
 
-/* ------------------------------------------------------------------
-   Image helpers (same behavior as ProductCard.jsx)
--------------------------------------------------------------------*/
-// Already a direct image file or data URL?
-const isLikelyImageFile = (url) =>
-  /^data:image\/|^https?:\/\/.+\.(png|jpg|jpeg|gif|webp|avif)(\?|#|$)/i.test(url);
-
-// Extract a Google Drive file ID from many URL shapes
-const extractDriveId = (raw) => {
-  if (!raw) return null;
-  const url = String(raw).trim();
-
-  // If it's already a direct image, skip Drive parsing
-  if (isLikelyImageFile(url)) return null;
-
-  // Quick rejects
-  if (/photos\.app\.goo\.gl/i.test(url)) return null; // Google Photos links not embeddable
-  if (/drive\.google\.com\/drive\/(u\/\d\/)?folders\//i.test(url)) return null; // Folder links
-
-  try {
-    const u = new URL(url);
-
-    // /file/d/<id>/...
-    const mPath = u.pathname.match(/\/file\/d\/([^/]+)/);
-    if (mPath) return mPath[1];
-
-    // /uc?id=<id> or /open?id=<id>
-    if ((/\/uc$/i.test(u.pathname) || /\/open$/i.test(u.pathname)) && u.searchParams.get("id")) {
-      return u.searchParams.get("id");
-    }
-
-    // ?id=<id>
-    const qid = u.searchParams.get("id");
-    if (qid) return qid;
-
-    // Fallback: any 25+ char Drive-like id
-    const mAny = u.href.match(/[-\w]{25,}/);
-    if (mAny) return mAny[0];
-  } catch {
-    // Regex fallback for non-URL strings
-    const m = url.match(/[-\w]{25,}/);
-    if (m) return m[0];
-  }
-  return null;
-};
-
-// Normalize to a safe <img> src (uc or thumbnail)
-const getImageSrc = (raw, { prefer = "uc", size = 1600, debugLabel = "" } = {}) => {
-  const placeholder = "/placeholder.png";
-  if (!raw) return placeholder;
-
-  const url = String(raw).trim();
-
-  // Google Photos links cannot be embedded directly
-  if (/photos\.app\.goo\.gl/i.test(url)) {
-    console.warn(`[StackCardCollection] ${debugLabel} Google Photos link cannot be embedded. Rehost the image.`);
-    return placeholder;
-  }
-
-  // If it's already a direct image URL or data URI, return as is
-  if (isLikelyImageFile(url)) return url;
-
-  // Google Drive handling
-  if (/drive\.google\.com/i.test(url)) {
-    const id = extractDriveId(url);
-    if (!id) {
-      console.warn(`[StackCardCollection] ${debugLabel} Drive URL has no file id (maybe folder or private link):`, url);
-      return placeholder;
-    }
-    return prefer === "thumbnail"
-      ? `https://drive.google.com/thumbnail?id=${id}&sz=w${size}`
-      : `https://drive.google.com/uc?export=view&id=${id}`;
-  }
-
-  // Other hosts (Firebase Storage, Imgur, etc.)
-  return url;
-};
-/* ------------------------------------------------------------------ */
-
 const StackCardCollection = () => {
   const [products, setProducts] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
@@ -120,7 +41,10 @@ const StackCardCollection = () => {
         const allProducts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
         const shuffled = allProducts.sort(() => 0.5 - Math.random());
-        const randomProducts = shuffled.slice(0, isMobile ? 6 : 10);
+        
+        // Slice exactly 8 items
+        const randomProducts = shuffled.slice(0, 8); 
+        
         setProducts(randomProducts);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -130,7 +54,7 @@ const StackCardCollection = () => {
     };
 
     fetchRandomProducts();
-  }, [isMobile]);
+  }, []);
 
   if (loading) {
     return (
@@ -150,7 +74,7 @@ const StackCardCollection = () => {
 
   return (
     <div className="bg-white py-8 md:py-12 px-4 relative overflow-hidden">
-      {/* Background Decorative Emojis (subtle on white) */}
+      {/* Background Decorative Emojis */}
       <div className="absolute top-8 left-8 text-4xl md:text-5xl text-gray-200 animate-bounce">🎂</div>
       <div className="absolute top-12 right-12 text-3xl md:text-4xl text-gray-200 animate-pulse-opacity">🧁</div>
       <div className="absolute bottom-12 left-12 text-4xl md:text-5xl text-gray-200 animate-bounce delay-1000">🍪</div>
@@ -197,7 +121,7 @@ const StackCardCollection = () => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{
-              width: isHovered ? (isMobile ? "100%" : "800px") : (isMobile ? "240px" : "300px"),
+              width: isHovered ? (isMobile ? "100%" : "850px") : (isMobile ? "240px" : "300px"),
               height: isMobile ? "180px" : "320px",
             }}
           >
@@ -211,7 +135,7 @@ const StackCardCollection = () => {
               };
 
               const spreadStyle = {
-                transform: `translateX(${(index - mid) * (isMobile ? 70 : -120)}px) translateY(${Math.sin((index - mid) * 0.5) * (isMobile ? 10 : -20)}px) rotate(${(index - mid) * (isMobile ? 0.5 : -9)}deg)`,
+                transform: `translateX(${(index - mid) * (isMobile ? 40 : -100)}px) translateY(${Math.sin((index - mid) * 0.5) * (isMobile ? 10 : -20)}px) rotate(${(index - mid) * (isMobile ? 2 : -5)}deg)`,
                 zIndex: total - Math.abs(index - mid),
               };
 
@@ -232,12 +156,12 @@ const StackCardCollection = () => {
                       borderRadius: "18px",
                       background: `linear-gradient(135deg, ${
                         index % 4 === 0
-                          ? "#E6FFFA, #C6F6D5" // mint to light green
+                          ? "#E6FFFA, #C6F6D5" 
                           : index % 4 === 1
-                          ? "#FFF5F7, #FED7E2" // very light pinks
+                          ? "#FFF5F7, #FED7E2" 
                           : index % 4 === 2
-                          ? "#F0FFF4, #C6F6D5" // light greens
-                          : "#FFF5F7, #FBD5E1" // pink duo
+                          ? "#F0FFF4, #C6F6D5" 
+                          : "#FFF5F7, #FBD5E1" 
                       })`,
                       border: "2px solid rgba(255, 255, 255, 0.9)",
                       boxShadow:
@@ -255,23 +179,11 @@ const StackCardCollection = () => {
                     <div className="absolute inset-3 flex items-center justify-center">
                       <div className="relative w-full h-full">
                         <img
-                          src={getImageSrc(product?.imageUrl, { prefer: "uc", size: 1600, debugLabel: `(stack ${index})` })}
+                          src={product.imageUrl || "/placeholder.png"}
                           alt={product.name}
                           className="w-full h-full object-cover rounded-xl shadow-md"
                           loading="lazy"
-                          referrerPolicy="no-referrer"
                           onError={(e) => {
-                            const original = (product?.imageUrl || "").trim();
-                            // Try Drive thumbnail fallback once
-                            if (/drive\.google\.com/i.test(original)) {
-                              const id = extractDriveId(original);
-                              if (id && !e.currentTarget.dataset.fallbackTried) {
-                                e.currentTarget.dataset.fallbackTried = "1";
-                                e.currentTarget.src = `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;
-                                return;
-                              }
-                            }
-                            // Otherwise placeholder
                             e.currentTarget.src = "/placeholder.png";
                           }}
                         />
@@ -285,7 +197,7 @@ const StackCardCollection = () => {
                           <div className="bg-white/85 rounded-lg p-1 mb-1 border border-pink-200">
                             <p className="text-pink-600 font-bold text-xs">Fresh</p>
                           </div>
-                          <h4 className="text-white font-bold text-sm md:text-base drop-shadow-lg">
+                          <h4 className="text-white font-bold text-sm md:text-base drop-shadow-lg line-clamp-1">
                             {product.name}
                           </h4>
                         </div>

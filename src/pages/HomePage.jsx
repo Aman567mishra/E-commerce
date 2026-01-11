@@ -3,9 +3,10 @@ import { collection, getDocs } from "firebase/firestore";
 import { db, auth, provider } from "../firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 import ProductCard from "../components/ProductCard";
-import Footer from "../components/Footer";
-import WaveDivider from "../components/WaveDivider";
+
 import DividerFooter from "../components/DividerAndFooter";
+import BottomBanner from "./BannerBottom";
+import TrendyPosters from "./TrendyPosters";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -55,7 +56,7 @@ const HomePage = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-green-900 mb-3">
-              Zentra Bakery
+              So Fresh Delight
             </h1>
             <p className="text-pink-600 text-lg sm:text-xl font-light max-w-2xl mx-auto">
               Crafting sweet moments with artisanal delights
@@ -158,6 +159,8 @@ const HomePage = () => {
           </div>
         </div>
       )}
+      <BottomBanner />
+      <TrendyPosters />
 <DividerFooter />
     
     </>

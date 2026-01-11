@@ -119,7 +119,7 @@ const CartPage = () => {
       return;
     }
     const message = generateWhatsAppMessage();
-    const phoneNumber = "918919978571";
+    const phoneNumber = "919440051099";
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
   };
 

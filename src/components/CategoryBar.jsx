@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import cake from '../assets/icons/cake.jpg';
@@ -9,82 +9,75 @@ import deco from '../assets/icons/deco_cake.jpg';
 import pastries from '../assets/icons/pastries.jpg';
 
 const categories = [
-  { name: 'Cakes', image: cake },
-  { name: 'Chocolate', image: choco },
-  { name: 'Cookies', image: cookies },
-  { name: 'Cupcake', image: cupcake },
-  { name: 'Deco cake', image: deco },
-  { name: 'Pastries', image: pastries },
+  { name: 'Cakes', image: cake, color: 'bg-gradient-to-br from-rose-50 to-rose-100' },
+  { name: 'Chocolate', image: choco, color: 'bg-gradient-to-br from-amber-50 to-amber-100' },
+  { name: 'Cookies', image: cookies, color: 'bg-gradient-to-br from-orange-50 to-orange-100' },
+  { name: 'Cupcake', image: cupcake, color: 'bg-gradient-to-br from-pink-50 to-pink-100' },
+  { name: 'Deco cake', image: deco, color: 'bg-gradient-to-br from-purple-50 to-purple-100' },
+  { name: 'Pastries', image: pastries, color: 'bg-gradient-to-br from-yellow-50 to-yellow-100' },
 ];
-
 
 const CategoryBar = () => {
   const navigate = useNavigate();
+  const [activeCategory, setActiveCategory] = useState(null);
 
   const handleCategoryClick = (categoryName) => {
-    navigate(`/category/${categoryName.toLowerCase()}`);
+    setActiveCategory(categoryName);
+    navigate(`/category/${categoryName.toLowerCase().replace(' ', '-')}`);
   };
 
   return (
-    <div className="relative shadow-md border-b border-gray-800/20 px-4 sm:px-8 lg:px-16 py-4 sm:py-6 lg:py-8 mb-0 overflow-x-auto scrollbar-hide bg-gradient-to-r from-[#03140f] to-[#082a1d]">
-      {/* Glitter Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {[...Array(25)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1.5 h-1.5 bg-white/30 rounded-full blur-sm animate-glitter"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDuration: `${4 + Math.random() * 6}s`,
-              animationDelay: `${Math.random() * 3}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 flex gap-4 sm:gap-6 lg:gap-20 justify-start sm:justify-center items-center min-w-[500px] sm:min-w-0">
-        {categories.map((category, index) => (
-          <div
-            key={index}
-            className="group flex flex-col items-center cursor-pointer w-14 sm:w-16 hover:scale-110 transition-all duration-300 ease-out"
-            onClick={() => handleCategoryClick(category.name)}
-          >
-            <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-emerald-400/60 bg-white p-1 flex items-center justify-center overflow-hidden shadow-lg group-hover:shadow-xl group-hover:border-emerald-300 transition-all duration-300">
-              {/* Overlay glow */}
-              <div className="absolute inset-0 rounded-full bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
-
-              {/* Fallback content */}
-              <div className="fallback w-full h-full bg-gradient-to-br from-emerald-100 to-emerald-50 rounded-full flex items-center justify-center">
-                <div className="w-6 h-6 bg-emerald-200 rounded-full flex items-center justify-center">
-                  <span className="text-emerald-700 font-bold text-xs">
-                    {category.name.charAt(0)}
+    <div className="w-full bg-white border-b border-gray-100 shadow-sm">
+      <div className="max-w-5xl mx-auto px-4">
+        <div className="flex items-center justify-center py-3">
+          <div className="flex items-center gap-4 md:gap-8">
+            {categories.map((category, index) => (
+              <div
+                key={index}
+                className="group relative"
+                onClick={() => handleCategoryClick(category.name)}
+              >
+                {/* Compact Nav Item */}
+                <div className={`flex items-center gap-2 px-4 py-3 rounded-lg cursor-pointer 
+                  transition-all duration-200 hover:bg-gray-50 
+                  ${activeCategory === category.name ? 'bg-gradient-to-r from-amber-50 to-orange-50 shadow-sm' : ''}`}>
+                  
+                  {/* Small Circular Icon */}
+                  <div className={`relative w-8 h-8 rounded-full ${category.color} border border-gray-200 
+                    overflow-hidden transition-transform duration-300 group-hover:scale-110
+                    ${activeCategory === category.name ? 'scale-110 ring-1 ring-amber-400' : ''}`}>
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        const parent = e.target.parentElement;
+                        const fallback = document.createElement('div');
+                        fallback.className = `w-full h-full ${category.color} rounded-full flex items-center justify-center`;
+                        fallback.innerHTML = `<span class="text-xs font-bold text-gray-700">${category.name.charAt(0)}</span>`;
+                        parent.appendChild(fallback);
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Category Label */}
+                  <span className={`text-sm font-medium text-gray-700 group-hover:text-gray-900 
+                    transition-colors duration-200 hidden sm:block
+                    ${activeCategory === category.name ? 'font-bold text-gray-900' : ''}`}>
+                    {category.name}
                   </span>
                 </div>
+                
+                {/* Active Indicator */}
+                {activeCategory === category.name && (
+                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 
+                    w-10 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"></div>
+                )}
               </div>
-
-              {/* Image */}
-              <img
-                src={category.image}
-                alt={category.name}
-                className="absolute inset-1 w-full h-full object-cover rounded-full opacity-90"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  const fallback = e.target.parentElement.querySelector('.fallback');
-                  if (fallback) fallback.style.display = 'flex';
-                }}
-                onLoad={(e) => {
-                  const fallback = e.target.parentElement.querySelector('.fallback');
-                  if (fallback) fallback.style.display = 'none';
-                }}
-              />
-            </div>
-
-            <p className="text-[10px] sm:text-xs font-semibold text-white/90 group-hover:text-emerald-200 text-center capitalize leading-tight transition-colors duration-300 drop-shadow-sm mt-1">
-              {category.name.replace('-', ' ')}
-            </p>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

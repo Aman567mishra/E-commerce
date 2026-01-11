@@ -35,7 +35,7 @@ const BakeryFooter = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div>
-            <h3 className="text-3xl font-light text-white mb-4">Zentra Bakery</h3>
+            <h3 className="text-3xl font-light text-white mb-4">So Fresh Delight</h3>
             <div className="w-16 h-1 bg-gradient-to-r from-green-400 to-lime-500 rounded-full mb-4"></div>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Handmade pastries, elegant cakes, and artisan sweets crafted fresh
@@ -115,8 +115,8 @@ const BakeryFooter = () => {
             </div>
             <div className="space-y-3 text-sm text-gray-400">
               {[{ icon: Phone, text: '+1 (555) 123-4567' },
-                { icon: Mail, text: 'support@zentra.bakery' },
-                { icon: MapPin, text: '123 Bake Ave, Sugarland' },
+                { icon: Mail, text: 'sofreshdelights@gmail.com' },
+                { icon: MapPin, text: 'Rampally,Hyderabad- 501301' },
               ].map(({ icon: Icon, text }, i) => (
                 <div key={i} className="flex items-center">
                   <Icon size={14} className="mr-3 text-green-400" />
@@ -133,7 +133,7 @@ const BakeryFooter = () => {
             Let us bake your next celebration.
           </h3>
           <p className="text-gray-400 mb-6 text-sm sm:text-base">
-            Weddings, birthdays, or just because—it’s sweeter with Zentra.
+            Weddings, birthdays, or just because—it’s sweeter with So Fresh Delight.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
@@ -158,7 +158,7 @@ const BakeryFooter = () => {
 
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center text-gray-500 text-xs">
-          <span>© 2024 Zentra Bakery. All rights reserved.</span>
+          <span>© 2024 So Fresh Delight. All rights reserved.</span>
           <div className="flex space-x-6 mt-2 sm:mt-0">
             {['Privacy Policy', 'Terms', 'Accessibility'].map((item, i) => (
               <a key={i} href="#" className="hover:text-white transition">

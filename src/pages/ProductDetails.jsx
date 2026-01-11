@@ -8,6 +8,7 @@ import HomePage from "./HomePage";
 import BakeryFAQ from "../components/BakeryFAQ";
 import WaveDivider from "../components/WaveDivider";
 import DividerFooter from "../components/DividerAndFooter";
+import StackCardCollection from "../components/StackCardCollection";
 
 const getImageSrc = (url) => {
   if (!url) return "/placeholder.png";
@@ -207,10 +208,13 @@ const ProductDetail = () => {
         </div>
       )}
       
-      <HomePage />
-      {/* <WaveDivider /> */}
+      
+      <StackCardCollection/>
       <BakeryFAQ />
-      <DividerFooter />
+<HomePage />
+      {/* <WaveDivider /> */}
+    
+     
     </>
   );
 };

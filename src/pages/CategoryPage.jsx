@@ -9,6 +9,8 @@ import BakeryFooter from "../components/Footer";
 import WaveDivider from "../components/WaveDivider";
 import BakeryFAQ from "../components/BakeryFAQ";
 import DividerFooter from "../components/DividerAndFooter";
+import TrendyPosters from "./TrendyPosters";
+import BottomBanner from "./BannerBottom";
 
 const CategoryPage = () => {
   const { categoryName, subCategory } = useParams();
@@ -37,6 +39,7 @@ const CategoryPage = () => {
   const categoryMappings = {
     cakes: ["cake", "cakes"],
     "muffins-cupcakes": ["muffin", "cupcake", "muffins", "cupcakes"],
+    "cheese-cupcake": ["muffin", "cupcake", "muffins", "cupcakes"],
     cookies: ["cookie", "cookies"],
     "healthy-cookies": [
       "healthy cookie",
@@ -58,7 +61,7 @@ const CategoryPage = () => {
     butterscotch: ["butterscotch"],
     "red-velvet": ["red velvet"],
     "choco-chip": ["choco chip", "chocolate chip"],
-    nankhatai: ["nankhatai"],
+    nankhatai: ["nankhatai", "cookies"],
     "jim-jam": ["jim jam", "jim-jam"],
     custard: ["custard"],
     jeera: ["jeera"],
@@ -273,7 +276,9 @@ const CategoryPage = () => {
       )}
 
       {/* Keep these sections - they already adapt to white backgrounds if they use Tailwind */}
+      <TrendyPosters />
       <StackCardCollection />
+      <BottomBanner />
       <BakeryFAQ />
       <DividerFooter />
       

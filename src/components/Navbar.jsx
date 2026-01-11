@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
-import logo from "/src/assets/logo.png";
+import logo from "/logoM.png";
 
 const Navbar = () => {
   const { user, loginWithGoogle, logout } = useAuth();
@@ -157,6 +157,7 @@ const Navbar = () => {
               About
               <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-emerald-300 transition-all duration-300 group-hover:w-full"></span>
             </Link>
+            
           </div>
 
           {/* Right Side */}

@@ -11,6 +11,9 @@ import ProductDetail from "./pages/ProductDetails";
 import Navbar from "./components/Navbar";
 
 import GalleryPage from "./pages/GalleryPage";
+// import TrendyPosters from "./pages/TrendyPosters";
+import OffersPage from "./pages/OfferPage";
+import About from "./pages/About";
 
 // import Dark from "./components/Dark";
 
@@ -29,9 +32,12 @@ const App = () => {
       <Navbar />
       {isHomePage && <Banner />}
       <CategoryBar />
+      {/* <TrendyPosters /> */}
 
       <Routes>
         <Route path="/" element={<HomePage /> } />
+        <Route path="/offers" element={<OffersPage /> } />
+        <Route path="/about" element={<About/> } />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/add-product" element={<AddProduct />} />
